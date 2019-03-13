@@ -19,11 +19,11 @@ var iconClass = L.Icon.extend({
 });
 
 var flag = new iconClass ({
-  iconUrl: "img/flag.png"
+  iconUrl: "img/bandera.png"
 })
 
 var center = new iconClass ({
-  iconUrl: "img/dive.png"
+  iconUrl: "img/divecenter.png"
 })
 
 // Centers
