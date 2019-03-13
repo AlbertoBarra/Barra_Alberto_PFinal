@@ -27,12 +27,12 @@ var center = new iconClass ({
 })
 
 // Centers
-var tamborilCenterPop = "<b>El Tamboril</b><br/>c/ La Ola, 4 - 666666666 <img src='img/borrar.jpg' width= '300px'height='150'/>"
+var tamborilCenterPop = "<b>El Tamboril</b><br/>c/ La Ola, 4 - 666666666 <img src='img/divecenter.png' width= '300px'height='150'/>"
 var tamborilCenterMarker = L.marker([27.642806, -17.981134], {icon: center})
 .addTo(map)
 .bindPopup(tamborilCenterPop);
 
-var greeSharkCenter = "<b>Green Shark</b><br/>c/ El Lajial, 7 - 666666666 <img src='img/borrar.jpg' width= '300px'height='150'/>"
+var greeSharkCenter = "<b>Green Shark</b><br/>c/ El Lajial, 7 - 666666666 <img src='img/divecenter.png' width= '300px'height='150'/>"
 var greeSharkCenterMarker = L.marker([27.640988, -17.982200], {icon: center})
 .addTo(map)
 .bindPopup(greeSharkCenter);
