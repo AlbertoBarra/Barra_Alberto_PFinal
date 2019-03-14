@@ -1,11 +1,9 @@
 // Initialize the map and set its view to geographical limits of El Hierro
 var map = L.map('map', {
-    zoomControl: false,
-    maxZoom: 18,
-    minZoom: 0,
-  }).setView([27.641443, -17.981520], 15);
-
-
+  zoomControl: false,
+  maxZoom: 18,
+  minZoom: 0,
+}).setView([27.641443, -17.981520], 15);
 
 // Add a tile layer to the map (Mapbox Streets tile layer)
 var osm = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -15,9 +13,21 @@ var osm = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?acce
   id: 'mapbox.streets'
 }).addTo(map);
 
-//Añadir capas temáticas:
+var osm2 = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+  '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+  'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+  id: 'mapbox.streets',
+  minZoom: 0,
+  maxZoom: 9
+});
 
-var cotas1000Var = L.geoJson(cotas1000).addTo(map);
+var miniMap = new L.Control.MiniMap(osm2, {toggleDisplay: true, position: 'bottomright'}).addTo(map);
+//Layers:
+
+//var cotas1000Var = L.geoJson(cotas1000).addTo(map);
+
+var espProtegidoVar = L.geoJson(espProtegido)
 
 var myStyleLines = {
   'color':"#0C014D",
@@ -31,7 +41,8 @@ var myStyleLines2 = {
 };
 
 var costaAntropVar = L.geoJson(costaAntrop, {style: myStyleLines2}).addTo(map);
-// Centers
+
+// Dive Centers icons
 L.MakiMarkers.accessToken="pk.eyJ1IjoiYWxiZXJ0b2JhcnJhIiwiYSI6ImNqc20xdXEzZDM0eG80NG1sMnFyejlhbzMifQ.pYqduV6nou2dhvI1Xvkc0A";
 
 var tamborilCenterPop = L.MakiMarkers.icon({icon:"harbor", color:"#0066ff",size:"m"});
@@ -58,7 +69,7 @@ var elHierroCenterMarker = L.marker([27.640958, -17.981938],{icon: elHierroCente
 var extraCenterPop = L.MakiMarkers.icon({icon:"harbor", color:"#0066ff",size:"m"});
 var extraCenterMarker = L.marker([27.640985, -17.980811],{icon: extraCenterPop}).addTo(map).bindPopup("<b><big>Extra Divers</big></b><br/>Av. Marítima, 2 <br/></br><i>Contacto: </i><br/>-Tfno. 92 255 70 86<br/>-elhierro@extradivers.org</br><a href='http://www.extradivers-elhierro.com/'target='_blank'>www.extradivers-elhierro.com</a></br><img src='img/extra.png' width= '100px'height='100'/>");
 
-// Spots
+// Dive Spots
 var iconClass = L.Icon.extend({
   iconSize: [20, 20],
   popupAnchor: [10, -10]
@@ -161,6 +172,7 @@ var overlayers = {
   "Catastro": Spain_Catastro,
   "Unidades administrativas": Spain_UnidadAdministrativa,
   "IGN Base": Spain_IGNBase,
+  "Espacios Protegidos": espProtegidoVar,
 };
 
 L.control.layers(baseLayers, overlayers,{collapsed:false}).addTo(map);
