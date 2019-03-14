@@ -5,6 +5,8 @@ var map = L.map('map', {
     minZoom: 0,
   }).setView([27.641443, -17.981520], 15);
 
+
+
 // Add a tile layer to the map (Mapbox Streets tile layer)
 var osm = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -13,15 +15,23 @@ var osm = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?acce
   id: 'mapbox.streets'
 }).addTo(map);
 
-var iconClass = L.Icon.extend({
-  iconSize: [20, 20],
-  popupAnchor: [10, -10]
-});
+//Añadir capas temáticas:
+var puntosBuceo = L.geoJson(spot).addTo(map);
 
-var flag = new iconClass ({
-  iconUrl: "img/flag.png"
-})
+var cotas1000Var = L.geoJson(cotas1000).addTo(map);
 
+var myStyleLines = {
+  'color':"#0C014D",
+	'weigth': 1,
+};
+var costaNaturalVar = L.geoJson(costaNatural, {style: myStyleLines}).addTo(map);
+
+var myStyleLines2 = {
+  'color':"#A20406",
+	'weigth': 1,
+};
+
+var costaAntropVar = L.geoJson(costaAntrop, {style: myStyleLines2}).addTo(map);
 // Centers
 L.MakiMarkers.accessToken="pk.eyJ1IjoiYWxiZXJ0b2JhcnJhIiwiYSI6ImNqc20xdXEzZDM0eG80NG1sMnFyejlhbzMifQ.pYqduV6nou2dhvI1Xvkc0A";
 
@@ -50,6 +60,14 @@ var extraCenterPop = L.MakiMarkers.icon({icon:"harbor", color:"#0066ff",size:"m"
 var extraCenterMarker = L.marker([27.640985, -17.980811],{icon: extraCenterPop}).addTo(map).bindPopup("<b><big>Extra Divers</big></b><br/>Av. Marítima, 2 <br/></br><i>Contacto: </i><br/>-Tfno. 92 255 70 86<br/>-elhierro@extradivers.org</br><a href='http://www.extradivers-elhierro.com/'target='_blank'>www.extradivers-elhierro.com</a></br><img src='img/extra.png' width= '100px'height='100'/>");
 
 // Spots
+var iconClass = L.Icon.extend({
+  iconSize: [20, 20],
+  popupAnchor: [10, -10]
+});
+
+var flag = new iconClass ({
+  iconUrl: "img/flag.png"
+})
 
 var spotAPop = "<b>A</b><br/>Profundidad: 20m"
 var spotAMarker = L.marker([27.645383, -18.002995], {icon: flag})
@@ -65,15 +83,12 @@ var iconsSpots = L.layerGroup([spotAMarker, spotBMarker]).addTo(map);
 
 //omnivore.kml('layers/iso.kml').addTo(map);
 
-
-
 var baseLayers = {
   "Open Street Maps": osm,
   "PNOA Máx. Actualidad": Spain_PNOA_Ortoimagen,
 };
 
 var overlayers = {
-  //"Batimetria": bat,
   "Catastro": Spain_Catastro,
   "Unidades administrativas": Spain_UnidadAdministrativa,
   "IGN Base": Spain_IGNBase,
