@@ -3,7 +3,7 @@ var map = L.map('map', {
     zoomControl: false,
     maxZoom: 18,
     minZoom: 0,
-  }).setView([27.726759, -18.0238975], 12);
+  }).setView([27.641443, -17.981520], 12);
 
 // Add a tile layer to the map (Mapbox Streets tile layer)
 var osm = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -19,7 +19,7 @@ var iconClass = L.Icon.extend({
 });
 
 var flag = new iconClass ({
-  iconUrl: "img/bandera.png"
+  iconUrl: "img/flag.png"
 })
 
 var center = new iconClass ({
