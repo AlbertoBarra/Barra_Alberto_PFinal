@@ -16,7 +16,6 @@ var osm = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?acce
 }).addTo(map);
 
 //Añadir capas temáticas:
-var puntosBuceo = L.geoJson(spot).addTo(map);
 
 var cotas1000Var = L.geoJson(cotas1000).addTo(map);
 
@@ -69,17 +68,87 @@ var flag = new iconClass ({
   iconUrl: "img/flag.png"
 })
 
-var spotAPop = "<b>A</b><br/>Profundidad: 20m"
-var spotAMarker = L.marker([27.645383, -18.002995], {icon: flag})
+var spotBajaBocaPop = "<b>Baja Bocarones</b><br/>Difícil<br/>Profundidad: 40m"
+var spotBajaBocaMarker = L.marker([27.664018, -17.966849], {icon: flag})
 .addTo(map)
-.bindPopup(spotAPop);
+.bindPopup(spotBajaBocaPop);
 
-var spotBPop = "<b>B</b><br/>Profundidad: 40m"
-var spotBMarker = L.marker([27.632732, -17.984898], {icon: flag})
+var spotPuntaRioPop = "<b>Punta del Rio</b></br>Media<br/>Profundidad: 30m"
+var spotPuntaRioMarker = L.marker([27.645380, -17.967697], {icon: flag})
 .addTo(map)
-.bindPopup(spotBPop);
+.bindPopup(spotPuntaRioPop);
 
-var iconsSpots = L.layerGroup([spotAMarker, spotBMarker]).addTo(map);
+var spotRioPop = "<b>El Rio</b></br>Media<br/>Profundidad: 35m"
+var spotRioMarker = L.marker([27.640936, -17.971577], {icon: flag})
+.addTo(map)
+.bindPopup(spotRioPop);
+
+var spotPuntaResPop = "<b>Punta La Restinga</b></br>Fácil<br/>Profundidad: 25m"
+var spotPuntaResMarker = L.marker([27.635373, -17.97746], {icon: flag})
+.addTo(map)
+.bindPopup(spotPuntaResPop);
+
+var spotRinconPop = "<b>El Rincón</b></br>Fácil<br/>Profundidad: 20m"
+var spotRincoMarker = L.marker([27.638506, -17.978795], {icon: flag})
+.addTo(map)
+.bindPopup(spotRinconPop);
+
+var spotBocanaPop = "<b>Bocana del puerto</b></br>Fácil<br/>Profundidad: 15m"
+var spotBocanaMarker = L.marker([27.637771, -17.984714], {icon: flag})
+.addTo(map)
+.bindPopup(spotBocanaPop);
+
+var spotBajonPop = "<b>El Bajón</b></br>Difícil<br/>Profundidad: 80m"
+var spotBajonMarker = L.marker([27.634797, -18.003121], {icon: flag})
+.addTo(map)
+.bindPopup(spotBajonPop);
+
+var spotHerraduraPop = "<b>La Herradura</b></br>Media<br/>Profundidad: 35m"
+var spotHerraduraMarker = L.marker([27.643142, -18.005383], {icon: flag})
+.addTo(map)
+.bindPopup(spotHerraduraPop);
+
+var spotPuntaCanasPop = "<b>Punta las Cañas</b></br>Fácil<br/>Profundidad: 20m"
+var spotPuntaCanasMarker = L.marker([27.646371, -18.013118], {icon: flag})
+.addTo(map)
+.bindPopup(spotPuntaCanasPop);
+
+var spotCuevaPop = "<b>Cueva del Diablo</b></br>Fácil<br/>Profundidad: 10m"
+var spotCuevaMarker = L.marker([27.659095, -18.018856], {icon: flag})
+.addTo(map)
+.bindPopup(spotCuevaPop);
+
+var spotPuntaLajPop = "<b>Punta Lajial</b></br>Difícil<br/>Profundidad: 40m"
+var spotPuntaLajMarker = L.marker([27.651231, -18.019615], {icon: flag})
+.addTo(map)
+.bindPopup(spotPuntaLajPop);
+
+var spotTacoronPop = "<b>Tacorón</b></br>Fácil<br/>Profundidad: 15m"
+var spotTacoronMarker = L.marker([27.664177, -18.026363], {icon: flag})
+.addTo(map)
+.bindPopup(spotTacoronPop);
+
+var spotTacoronRoqPop = "<b>Roque del Tacorón</b></br>Fácil<br/>Profundidad: 20m"
+var spotTacoronRoqMarker = L.marker([27.660278, -18.029648], {icon: flag})
+.addTo(map)
+.bindPopup(spotTacoronRoqPop);
+
+var spotSaltoPop = "<b>El Salto</b></br>Media<br/>Profundidad: 35m"
+var spotSaltoRoqMarker = L.marker([27.669452, -18.030333], {icon: flag})
+.addTo(map)
+.bindPopup(spotSaltoPop);
+
+var spotBajaRosPop = "<b>Baja Rosario</b></br>Fácil<br/>Profundidad: 25m"
+var spotBajaRosMarker = L.marker([27.674502, -18.033257], {icon: flag})
+.addTo(map)
+.bindPopup(spotBajaRosPop);
+
+var spotDesiertoPop = "<b>El Desierto</b></br>Fácil<br/>Profundidad: 35m"
+var spotDesiertoMarker = L.marker([27.674502, -18.033257], {icon: flag})
+.addTo(map)
+.bindPopup(spotDesiertoPop);
+
+var iconsSpots = L.layerGroup([spotDesiertoMarker, spotBajaRosMarker, spotSaltoRoqMarker, spotTacoronRoqMarker, spotTacoronMarker, spotPuntaLajMarker, spotCuevaMarker, spotPuntaCanasMarker, spotHerraduraMarker, spotBajonMarker, spotBocanaMarker, spotRincoMarker, spotBajaBocaMarker, spotPuntaRioMarker, spotRioMarker, spotPuntaResMarker]).addTo(map);
 
 //omnivore.kml('layers/iso.kml').addTo(map);
 
