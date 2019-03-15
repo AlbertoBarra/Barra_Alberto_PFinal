@@ -26,21 +26,160 @@ var miniMap = new L.Control.MiniMap(osm2, {toggleDisplay: true, position: 'botto
 //Layers:
 
 //var cotas1000Var = L.geoJson(cotas1000).addTo(map);
+var myStyleProt = {
+  'color': '#ffff99',
+  'weigth': 1,
+  'opacity': 0.8
+}
+function getColor(d) {
+  return d > 5 ? "#fde631":
+  d > 4 ? "#fd9a31":
+  d > 3 ? "#abe845":
+  d > 2 ? "#f5de6d":
+  d > 1 ? "#236f23":
+  "#E8B479";
 
-var espProtegidoVar = L.geoJson(espProtegido)
+}
+  function style(feature) {
+    return {
+      weight: 2,
+      opacity: 1,
+      dashArray: '1',
+      color: 'white',
+      fillOpacity: 0.5,
+      fillColor: getColor(feature.properties.id)
+      }
+  }
+    function popup(feature, layer) {
+      if (feature.properties && feature.properties.nombre) {
+        layer.bindPopup(feature.properties.nombre);
+      }
+    }
+    geojson = L.geoJson(espacios1, {
+      style: style, onEachFeature: popup
+    }).addTo(map);
 
-var myStyleLines = {
+
+    L.control.scale({maxWidth: 100, metric: true, imperial: false, position: 'bottomleft'}).addTo(map);
+
+    var legend = L.control({position: 'bottomleft'});
+    legend.onAdd = function (map) {
+        var div = L.DomUtil.create('div', 'info legend'),
+            grades = ['Monumento Nacional', 'Paisaje Protegido', 'Parque Rural', 'Reserva Natural Especial', 'Reserva Natural Integral'],
+            labels = ["img/Monumento.png", "img/Paisaje.png", "img/Parque.png", "img/Especial.png", "img/Integral.png"];
+        // loop through our density intervals and generate a label with a colored square for each interval
+        for (var i = 0; i < grades.length; i++) {
+            div.innerHTML +=
+            (" <img src="+ labels[i] +" height='20' width='30'>") + '   ' + grades[i] + '<br>';
+        }
+        return div;
+    };
+    legend.addTo(map);
+
+var espProtegidoVar = L.geoJson(espacios1, {style: style})
+
+
+var bati = L.geoJson(batimetria, {}).addTo(map);
+
+
+var myStyleNatu = {
   'color':"#0C014D",
 	'weigth': 1,
 };
-var costaNaturalVar = L.geoJson(costaNatural, {style: myStyleLines}).addTo(map);
+var costaNaturalVar = L.geoJson(costaNatural, {style: myStyleNatu}).addTo(map);
 
-var myStyleLines2 = {
+var myStyleAntrop = {
   'color':"#A20406",
 	'weigth': 1,
 };
+var costaAntropVar = L.geoJson(costaAntrop, {style: myStyleAntrop}).addTo(map);
 
-var costaAntropVar = L.geoJson(costaAntrop, {style: myStyleLines2}).addTo(map);
+//Dive Spots icons:
+
+var iconoBandera = L.icon({
+  iconUrl: "img/flag.png",
+  iconSize:     [25, 15], // size of the icon
+})
+
+var spotBajaBocaPop = "<b>Baja Bocarones</b><br/>Difícil<br/>Profundidad: 40m"
+var spotBajaBocaMarker =  L.marker([27.664018, -17.966849], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotBajaBocaPop);
+
+var spotPuntaRioPop = "<b>Punta del Rio</b></br>Media<br/>Profundidad: 30m"
+var spotPuntaRioMarker = L.marker([27.645380, -17.967697], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotPuntaRioPop);
+
+var spotRioPop = "<b>El Rio</b></br>Media<br/>Profundidad: 35m"
+var spotRioMarker = L.marker([27.640936, -17.971577], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotRioPop);
+
+var spotPuntaResPop = "<b>Punta La Restinga</b></br>Fácil<br/>Profundidad: 25m"
+var spotPuntaResMarker = L.marker([27.635373, -17.97746], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotPuntaResPop);
+
+var spotRinconPop = "<b>El Rincón</b></br>Fácil<br/>Profundidad: 20m"
+var spotRincoMarker = L.marker([27.638506, -17.978795], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotRinconPop);
+
+var spotBocanaPop = "<b>Bocana del puerto</b></br>Fácil<br/>Profundidad: 15m"
+var spotBocanaMarker = L.marker([27.637771, -17.984714], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotBocanaPop);
+
+var spotBajonPop = "<b>El Bajón</b></br>Difícil<br/>Profundidad: 80m"
+var spotBajonMarker = L.marker([27.634797, -18.003121], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotBajonPop);
+
+var spotHerraduraPop = "<b>La Herradura</b></br>Media<br/>Profundidad: 35m"
+var spotHerraduraMarker = L.marker([27.643142, -18.005383], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotHerraduraPop);
+
+var spotPuntaCanasPop = "<b>Punta las Cañas</b></br>Fácil<br/>Profundidad: 20m"
+var spotPuntaCanasMarker = L.marker([27.646371, -18.013118], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotPuntaCanasPop);
+
+var spotCuevaPop = "<b>Cueva del Diablo</b></br>Fácil<br/>Profundidad: 10m"
+var spotCuevaMarker = L.marker([27.659095, -18.018856], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotCuevaPop);
+
+var spotPuntaLajPop = "<b>Punta Lajial</b></br>Difícil<br/>Profundidad: 40m"
+var spotPuntaLajMarker = L.marker([27.651231, -18.019615], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotPuntaLajPop);
+
+var spotTacoronPop = "<b>Tacorón</b></br>Fácil<br/>Profundidad: 15m"
+var spotTacoronMarker = L.marker([27.664177, -18.026363], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotTacoronPop);
+
+var spotTacoronRoqPop = "<b>Roque del Tacorón</b></br>Fácil<br/>Profundidad: 20m"
+var spotTacoronRoqMarker = L.marker([27.660278, -18.029648], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotTacoronRoqPop);
+
+var spotSaltoPop = "<b>El Salto</b></br>Media<br/>Profundidad: 35m"
+var spotSaltoRoqMarker = L.marker([27.669452, -18.030333], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotSaltoPop);
+
+var spotBajaRosPop = "<b>Baja Rosario</b></br>Fácil<br/>Profundidad: 25m"
+var spotBajaRosMarker = L.marker([27.674502, -18.033257], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotBajaRosPop);
+
+var spotDesiertoPop = "<b>El Desierto</b></br>Fácil<br/>Profundidad: 35m"
+var spotDesiertoMarker = L.marker([27.674502, -18.033257], {icon: iconoBandera})
+.addTo(map)
+.bindPopup(spotDesiertoPop);
 
 // Dive Centers icons
 L.MakiMarkers.accessToken="pk.eyJ1IjoiYWxiZXJ0b2JhcnJhIiwiYSI6ImNqc20xdXEzZDM0eG80NG1sMnFyejlhbzMifQ.pYqduV6nou2dhvI1Xvkc0A";
@@ -69,97 +208,8 @@ var elHierroCenterMarker = L.marker([27.640958, -17.981938],{icon: elHierroCente
 var extraCenterPop = L.MakiMarkers.icon({icon:"harbor", color:"#0066ff",size:"m"});
 var extraCenterMarker = L.marker([27.640985, -17.980811],{icon: extraCenterPop}).addTo(map).bindPopup("<b><big>Extra Divers</big></b><br/>Av. Marítima, 2 <br/></br><i>Contacto: </i><br/>-Tfno. 92 255 70 86<br/>-elhierro@extradivers.org</br><a href='http://www.extradivers-elhierro.com/'target='_blank'>www.extradivers-elhierro.com</a></br><img src='img/extra.png' width= '100px'height='100'/>");
 
-// Dive Spots
-var iconClass = L.Icon.extend({
-  iconSize: [20, 20],
-  popupAnchor: [10, -10]
-});
 
-var flag = new iconClass ({
-  iconUrl: "img/flag.png"
-})
-
-var spotBajaBocaPop = "<b>Baja Bocarones</b><br/>Difícil<br/>Profundidad: 40m"
-var spotBajaBocaMarker = L.marker([27.664018, -17.966849], {icon: flag})
-.addTo(map)
-.bindPopup(spotBajaBocaPop);
-
-var spotPuntaRioPop = "<b>Punta del Rio</b></br>Media<br/>Profundidad: 30m"
-var spotPuntaRioMarker = L.marker([27.645380, -17.967697], {icon: flag})
-.addTo(map)
-.bindPopup(spotPuntaRioPop);
-
-var spotRioPop = "<b>El Rio</b></br>Media<br/>Profundidad: 35m"
-var spotRioMarker = L.marker([27.640936, -17.971577], {icon: flag})
-.addTo(map)
-.bindPopup(spotRioPop);
-
-var spotPuntaResPop = "<b>Punta La Restinga</b></br>Fácil<br/>Profundidad: 25m"
-var spotPuntaResMarker = L.marker([27.635373, -17.97746], {icon: flag})
-.addTo(map)
-.bindPopup(spotPuntaResPop);
-
-var spotRinconPop = "<b>El Rincón</b></br>Fácil<br/>Profundidad: 20m"
-var spotRincoMarker = L.marker([27.638506, -17.978795], {icon: flag})
-.addTo(map)
-.bindPopup(spotRinconPop);
-
-var spotBocanaPop = "<b>Bocana del puerto</b></br>Fácil<br/>Profundidad: 15m"
-var spotBocanaMarker = L.marker([27.637771, -17.984714], {icon: flag})
-.addTo(map)
-.bindPopup(spotBocanaPop);
-
-var spotBajonPop = "<b>El Bajón</b></br>Difícil<br/>Profundidad: 80m"
-var spotBajonMarker = L.marker([27.634797, -18.003121], {icon: flag})
-.addTo(map)
-.bindPopup(spotBajonPop);
-
-var spotHerraduraPop = "<b>La Herradura</b></br>Media<br/>Profundidad: 35m"
-var spotHerraduraMarker = L.marker([27.643142, -18.005383], {icon: flag})
-.addTo(map)
-.bindPopup(spotHerraduraPop);
-
-var spotPuntaCanasPop = "<b>Punta las Cañas</b></br>Fácil<br/>Profundidad: 20m"
-var spotPuntaCanasMarker = L.marker([27.646371, -18.013118], {icon: flag})
-.addTo(map)
-.bindPopup(spotPuntaCanasPop);
-
-var spotCuevaPop = "<b>Cueva del Diablo</b></br>Fácil<br/>Profundidad: 10m"
-var spotCuevaMarker = L.marker([27.659095, -18.018856], {icon: flag})
-.addTo(map)
-.bindPopup(spotCuevaPop);
-
-var spotPuntaLajPop = "<b>Punta Lajial</b></br>Difícil<br/>Profundidad: 40m"
-var spotPuntaLajMarker = L.marker([27.651231, -18.019615], {icon: flag})
-.addTo(map)
-.bindPopup(spotPuntaLajPop);
-
-var spotTacoronPop = "<b>Tacorón</b></br>Fácil<br/>Profundidad: 15m"
-var spotTacoronMarker = L.marker([27.664177, -18.026363], {icon: flag})
-.addTo(map)
-.bindPopup(spotTacoronPop);
-
-var spotTacoronRoqPop = "<b>Roque del Tacorón</b></br>Fácil<br/>Profundidad: 20m"
-var spotTacoronRoqMarker = L.marker([27.660278, -18.029648], {icon: flag})
-.addTo(map)
-.bindPopup(spotTacoronRoqPop);
-
-var spotSaltoPop = "<b>El Salto</b></br>Media<br/>Profundidad: 35m"
-var spotSaltoRoqMarker = L.marker([27.669452, -18.030333], {icon: flag})
-.addTo(map)
-.bindPopup(spotSaltoPop);
-
-var spotBajaRosPop = "<b>Baja Rosario</b></br>Fácil<br/>Profundidad: 25m"
-var spotBajaRosMarker = L.marker([27.674502, -18.033257], {icon: flag})
-.addTo(map)
-.bindPopup(spotBajaRosPop);
-
-var spotDesiertoPop = "<b>El Desierto</b></br>Fácil<br/>Profundidad: 35m"
-var spotDesiertoMarker = L.marker([27.674502, -18.033257], {icon: flag})
-.addTo(map)
-.bindPopup(spotDesiertoPop);
-
-var iconsSpots = L.layerGroup([spotDesiertoMarker, spotBajaRosMarker, spotSaltoRoqMarker, spotTacoronRoqMarker, spotTacoronMarker, spotPuntaLajMarker, spotCuevaMarker, spotPuntaCanasMarker, spotHerraduraMarker, spotBajonMarker, spotBocanaMarker, spotRincoMarker, spotBajaBocaMarker, spotPuntaRioMarker, spotRioMarker, spotPuntaResMarker]).addTo(map);
+//var iconsSpots = L.layerGroup([spotDesiertoMarker, spotBajaRosMarker, spotSaltoRoqMarker, spotTacoronRoqMarker, spotTacoronMarker, spotPuntaLajMarker, spotCuevaMarker, spotPuntaCanasMarker, spotHerraduraMarker, spotBajonMarker, spotBocanaMarker, spotRincoMarker, spotBajaBocaMarker, spotPuntaRioMarker, spotRioMarker, spotPuntaResMarker]).addTo(map);
 
 //omnivore.kml('layers/iso.kml').addTo(map);
 
@@ -172,7 +222,6 @@ var overlayers = {
   "Catastro": Spain_Catastro,
   "Unidades administrativas": Spain_UnidadAdministrativa,
   "IGN Base": Spain_IGNBase,
-  "Espacios Protegidos": espProtegidoVar,
 };
 
 L.control.layers(baseLayers, overlayers,{collapsed:false}).addTo(map);
@@ -183,5 +232,3 @@ map.addControl(new L.Control.Fullscreen({
 }));
 
 L.control.mousePosition({position: 'bottomright'}).addTo(map);
-
-L.control.scale({maxWidth: 100, metric: true, imperial: false, position: 'bottomleft'}).addTo(map);
